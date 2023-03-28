@@ -16,6 +16,8 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final String USER_NOT_FOUND_BY_ID_ERROR_MESSAGE = "User not found by id=";
+
     private final UserRepository userRepository;
     private final UserMapper mapper;
 
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto getUser(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found by id=" + id));
+                .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND_BY_ID_ERROR_MESSAGE + id));
 
         return mapper.toDto(user);
     }
@@ -49,11 +51,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserResponseDto updateUser(UserRequestDto requestDto) {
+    public UserResponseDto updateUser(Long id, UserRequestDto requestDto) {
         User user = mapper.toEntity(requestDto);
-        Long id = user.getId();
         User entity = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found by id=" + id));
+                .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND_BY_ID_ERROR_MESSAGE + id));
         entity.setName(user.getName());
         entity.setSurname(user.getSurname());
         entity.setBirthday(user.getBirthday());
@@ -63,6 +64,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND_BY_ID_ERROR_MESSAGE + id));
+        userRepository.delete(user);
     }
 }

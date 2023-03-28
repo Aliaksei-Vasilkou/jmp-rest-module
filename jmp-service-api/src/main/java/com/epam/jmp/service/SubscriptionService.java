@@ -13,5 +13,5 @@ public interface SubscriptionService {
 
     SubscriptionResponseDto createSubscription(SubscriptionRequestDto requestDto);
 
-    SubscriptionResponseDto updateSubscription(SubscriptionRequestDto requestDto);
+    SubscriptionResponseDto updateSubscription(Long id, SubscriptionRequestDto requestDto);
 }

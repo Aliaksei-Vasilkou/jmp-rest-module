@@ -17,6 +17,9 @@ import java.util.List;
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService {
 
+    private static final String USER_NOT_FOUND_BY_ID_ERROR_MESSAGE = "User not found by id=";
+    private static final String SUBSCRIPTION_NOT_FOUND_BY_ID_ERROR_MESSAGE = "Subscription not found by id=";
+
     private final SubscriptionRepository subscriptionRepository;
     private final UserRepository userRepository;
     private final SubscriptionMapper mapper;
@@ -48,7 +51,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     public SubscriptionResponseDto createSubscription(SubscriptionRequestDto requestDto) {
         Long userId = requestDto.getUserId();
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found by id=" + userId));
+                .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND_BY_ID_ERROR_MESSAGE + userId));
 
         Subscription subscription = new Subscription();
         subscription.setUser(user);
@@ -59,14 +62,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     @Transactional
-    public SubscriptionResponseDto updateSubscription(SubscriptionRequestDto requestDto) {
-        Long userId = requestDto.getUserId();
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found by id=" + userId));
+    public SubscriptionResponseDto updateSubscription(Long id, SubscriptionRequestDto requestDto) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND_BY_ID_ERROR_MESSAGE + id));
 
         Long subscriptionId = requestDto.getId();
         Subscription subscription = subscriptionRepository.findById(subscriptionId)
-                .orElseThrow(() -> new ResourceNotFoundException("Subscription not found by id=" + subscriptionId));
+                .orElseThrow(() -> new ResourceNotFoundException(SUBSCRIPTION_NOT_FOUND_BY_ID_ERROR_MESSAGE + subscriptionId));
         subscription.setUser(user);
         subscription.setStartDate(LocalDate.now());
 

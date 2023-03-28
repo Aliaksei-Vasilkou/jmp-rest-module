@@ -13,7 +13,7 @@ public class RestControllerExceptionHandler {
     private static final String APPLICATION_SOURCE = "jmp-application";
 
     @ExceptionHandler(value = ResourceNotFoundException.class)
-    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException exception) {
+    public ResponseEntity<ErrorResponse> handleResourceNotFoundException(ResourceNotFoundException exception) {
         ErrorResponse errorResponse = buildErrorResponse("RESOURCE_NOT_FOUND", exception.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }

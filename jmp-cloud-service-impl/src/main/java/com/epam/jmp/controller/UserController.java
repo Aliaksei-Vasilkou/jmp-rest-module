@@ -1,6 +1,5 @@
-package com.epam.jmp;
+package com.epam.jmp.controller;
 
-import com.epam.jmp.controller.UserControllerApi;
 import com.epam.jmp.model.dto.request.UserRequestDto;
 import com.epam.jmp.model.dto.response.UserResponseDto;
 import com.epam.jmp.service.UserService;
@@ -40,9 +39,9 @@ public class UserController implements UserControllerApi {
     }
 
     @Override
-    public ResponseEntity<UserResponseDto> updateUser(UserRequestDto requestDto) {
+    public ResponseEntity<UserResponseDto> updateUser(Long id, UserRequestDto requestDto) {
 
-        return ResponseEntity.ok(userService.updateUser(requestDto));
+        return ResponseEntity.ok(userService.updateUser(id, requestDto));
     }
 
     @Override

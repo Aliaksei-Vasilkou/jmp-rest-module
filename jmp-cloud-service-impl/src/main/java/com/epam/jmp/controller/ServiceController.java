@@ -1,6 +1,5 @@
-package com.epam.jmp;
+package com.epam.jmp.controller;
 
-import com.epam.jmp.controller.ServiceControllerApi;
 import com.epam.jmp.model.dto.request.SubscriptionRequestDto;
 import com.epam.jmp.model.dto.response.SubscriptionResponseDto;
 import com.epam.jmp.service.SubscriptionService;
@@ -38,8 +37,8 @@ public class ServiceController implements ServiceControllerApi {
     }
 
     @Override
-    public ResponseEntity<SubscriptionResponseDto> updateSubscription(SubscriptionRequestDto requestDto) {
+    public ResponseEntity<SubscriptionResponseDto> updateSubscription(Long id, SubscriptionRequestDto requestDto) {
 
-        return ResponseEntity.ok(subscriptionService.updateSubscription(requestDto));
+        return ResponseEntity.ok(subscriptionService.updateSubscription(id, requestDto));
     }
 }

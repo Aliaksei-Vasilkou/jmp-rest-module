@@ -53,8 +53,8 @@ public interface UserControllerApi {
             @ApiResponse(code = 404, message = "Not Found Error", response = ErrorResponse.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResponse.class)
     })
-    @PutMapping
-    ResponseEntity<UserResponseDto> updateUser(@RequestBody @Valid UserRequestDto user);
+    @PutMapping("/{id}")
+    ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id, @RequestBody @Valid UserRequestDto user);
 
     @ApiOperation(value = "Delete user by id")
     @ApiResponses(value = {

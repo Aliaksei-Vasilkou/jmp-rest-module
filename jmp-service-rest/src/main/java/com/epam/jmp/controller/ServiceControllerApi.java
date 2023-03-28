@@ -51,6 +51,7 @@ public interface ServiceControllerApi {
             @ApiResponse(code = 200, message = "OK", response = SubscriptionResponseDto.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = ErrorResponse.class)
     })
-    @PutMapping
-    ResponseEntity<SubscriptionResponseDto> updateSubscription(@RequestBody @Valid SubscriptionRequestDto subscription);
+    @PutMapping("/{id}")
+    ResponseEntity<SubscriptionResponseDto> updateSubscription(@PathVariable Long id,
+                                                               @RequestBody @Valid SubscriptionRequestDto subscription);
 }
